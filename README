@@ -1,7 +1,0 @@
-This is a tool to track rotation in the game.
-Usage:
-  - gt new 1 2 3 4 5: Create a new game with starting lineup.
-  - gt start: Start the timer.
-  - gt stop: Stop the timer.
-  - gt replace 1 6: Replace 1 with 6.
-  - gt show: Show the status. The information includes total play time and play time on court.
