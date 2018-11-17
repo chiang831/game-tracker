@@ -15,8 +15,8 @@ def load_team_from_csv(db, csv_file):
     with open(csv_file) as csvfile:
         rows = csv.DictReader(csvfile)
         for row in rows:
-            number = int(row['number'])
-            name = row['name']
+            number = int(row['number'].strip())
+            name = row['name'].strip()
 
             team_info[number] = dict(number=number, name=name)
 
