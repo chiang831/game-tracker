@@ -12,6 +12,7 @@ import sqlite3
 import time
 
 from gt import database_utils
+from gt import utils
 
 logger = logging.getLogger(__name__)
 
@@ -169,22 +170,34 @@ class Tracker(object):
     def show(self):
         self.calculate()
 
-        print('=' * 60)
+        line_len = 80
+
+        print('=' * line_len)
         print('Game is %s' % ('RUNNING' if self._is_running else 'PAUSED'))
-        print('-' * 60)
+        print('-' * line_len)
         print('On the court:\n')
         for player, acu_time, latest_on_time in self._on_court_results:
-            name = self._get_player_name(player)
-            print('Player: %d %s\t\t total: %d\t playing for: %d' % (player, name, acu_time, latest_on_time))
 
-        print('-' * 60)
+            name = self._get_player_name(player)
+            acu_time_str = utils.seconds_to_mins_secs(acu_time)
+            on_time_str = utils.seconds_to_mins_secs(latest_on_time)
+
+            print('Player: %d\t%s\t\t total: %s\t playing for: %s' %
+                  (player, name, acu_time_str, on_time_str))
+
+        print('-' * line_len)
         print('On the bench:\n')
 
         for player, acu_time, latest_off_time in self._off_court_results:
-            name = self._get_player_name(player)
-            print('Player: %d %s\t\t total: %d\t resting for: %d' % (player, name, acu_time, latest_off_time))
 
-        print('=' * 60)
+            name = self._get_player_name(player)
+            acu_time_str = utils.seconds_to_mins_secs(acu_time)
+            off_time_str = utils.seconds_to_mins_secs(latest_off_time)
+
+            print('Player: %d\t%s\t\t total: %s\t resting for: %s' %
+                  (player, name, acu_time_str, off_time_str))
+
+        print('=' * line_len)
 
     def _get_player_name(self, player):
         """Tries to get player name by its number."""

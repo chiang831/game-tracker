@@ -7,21 +7,21 @@ The information includes total playing time, continuous playing time and resting
 ## Example output
 
 ```
-============================================================
+================================================================================
 Game is RUNNING
-------------------------------------------------------------
+--------------------------------------------------------------------------------
 On the court:
 
-Player: 2 B              total: 129      playing for: 129
-Player: 3 C              total: 129      playing for: 129
-Player: 4 D              total: 129      playing for: 129
-Player: 5 E              total: 129      playing for: 129
-Player: 6 F              total: 46       playing for: 46
-------------------------------------------------------------
+Player: 1       A                total: 1 m 25 s         playing for: 0 m 7 s
+Player: 2       B                total: 1 m 48 s         playing for: 0 m 7 s
+Player: 3       C                total: 1 m 48 s         playing for: 0 m 7 s
+Player: 5       E                total: 1 m 48 s         playing for: 0 m 7 s
+Player: 6       F                total: 0 m 30 s         playing for: 0 m 7 s
+--------------------------------------------------------------------------------
 On the bench:
 
-Player: 1 A              total: 83       resting for: 46
-============================================================
+Player: 4       D                total: 1 m 40 s         resting for: 0 m 10 s
+================================================================================
 
 ```
 
