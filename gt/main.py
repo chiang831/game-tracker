@@ -13,6 +13,7 @@ import time
 
 from gt import database_utils
 from gt import tracker
+from gt import team
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +22,7 @@ DB_PATH = 'gt.db'
 def bootstrap_db(db):
     """Creates a database to store events."""
     db.execute("""CREATE TABLE events (timestamp, event_type, player)""")
+    db.execute("""CREATE TABLE team_info (number UNIQUE, name)""")
 
 
 def new_game(tk, starters):
@@ -43,6 +45,13 @@ def main():
       'new', help='Add a new game with starting lineup')
     parser_new.add_argument('starters', nargs=5, type=int, metavar="ID",
                             help='Create a game with starting lineup')
+
+    parser_new = subparsers.add_parser(
+      'load_team', help='Loads a CSV file for team members.')
+    parser_new.add_argument('csv_file', type=str, metavar="FILE",
+                            help='Loads a CSV file for team members.\n'
+                                 'The fields are number and name.\n'
+                                 'Check the example in data/team.csv')
 
     parser_start = subparsers.add_parser(
       'start', help='Start or resume the game')
@@ -82,7 +91,8 @@ def main():
     else:
         db = database_utils.DatabaseManager(db_path)
 
-    tk = tracker.Tracker(db)
+    team_info = team.load_team_from_db(db)
+    tk = tracker.Tracker(db, team_info)
 
     if args.command == 'new':
         new_game(tk, args.starters)
@@ -100,6 +110,10 @@ def main():
     if args.command == 'reset':
         logger.debug('Reset the game')
         tk.reset()
+        team.reset(db)
+
+    if args.command == 'load_team':
+        team.load_team_from_csv(db, args.csv_file)
 
     if args.command == 'show':
         tk.show()

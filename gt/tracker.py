@@ -29,7 +29,7 @@ class TrackerError(Exception):
 class Tracker(object):
     INSERT_STR = 'INSERT INTO events VALUES (?,?,?)'
     NULL_PLAYER = -1
-    def __init__(self, db):
+    def __init__(self, db, team_info):
         self._db = db
         self._on_court_players = None
         self._players = None
@@ -37,6 +37,7 @@ class Tracker(object):
         self._on_court_results = []
         self._off_court_results = []
         self._is_running = False
+        self._team_info = team_info
 
     def _has_event(self):
         c = self._db.execute('SELECT * FROM events')
@@ -173,15 +174,23 @@ class Tracker(object):
         print('-' * 60)
         print('On the court:\n')
         for player, acu_time, latest_on_time in self._on_court_results:
-            print('Player: %d\t total: %d\t playing for: %d' % (player, acu_time, latest_on_time))
+            name = self._get_player_name(player)
+            print('Player: %d %s\t\t total: %d\t playing for: %d' % (player, name, acu_time, latest_on_time))
 
         print('-' * 60)
         print('On the bench:\n')
 
         for player, acu_time, latest_off_time in self._off_court_results:
-            print('Player: %d\t total: %d\t resting for: %d' % (player, acu_time, latest_off_time))
+            name = self._get_player_name(player)
+            print('Player: %d %s\t\t total: %d\t resting for: %d' % (player, name, acu_time, latest_off_time))
 
         print('=' * 60)
+
+    def _get_player_name(self, player):
+        """Tries to get player name by its number."""
+        if player in self._team_info:
+            return self._team_info[player]['name']
+        return ''
 
     def _get_player_events(self, player):
         c = self._db.execute('SELECT timestamp, event_type FROM events WHERE player = (?)',

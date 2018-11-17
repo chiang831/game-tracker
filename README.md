@@ -12,19 +12,15 @@ Game is RUNNING
 ------------------------------------------------------------
 On the court:
 
-Player: 3        total: 2525     playing for: 1906
-Player: 4        total: 2525     playing for: 1906
-Player: 6        total: 2510     playing for: 1906
-Player: 12       total: 1794     playing for: 1794
-Player: 20       total: 7        playing for: 7
+Player: 2 B              total: 129      playing for: 129
+Player: 3 C              total: 129      playing for: 129
+Player: 4 D              total: 129      playing for: 129
+Player: 5 E              total: 129      playing for: 129
+Player: 6 F              total: 46       playing for: 46
 ------------------------------------------------------------
 On the bench:
 
-Player: 1        total: 15       resting for: 2581
-Player: 2        total: 39       resting for: 2533
-Player: 5        total: 69       resting for: 2492
-Player: 7        total: 692      resting for: 1794
-Player: 199      total: 2448     resting for: 7
+Player: 1 A              total: 83       resting for: 46
 ============================================================
 
 ```
@@ -41,6 +37,24 @@ Create a new game with starting lineup 1,2,3,4,5.
 
 ```
 gt new 1 2 3 4 5
+```
+
+Loads a CSV file for roster.
+
+```
+gt load_team roster.csv
+```
+
+The CSV file format is like this:
+
+```
+number,name
+1,A
+2,B
+3,C
+4,D
+5,E
+6,F
 ```
 
 Start the timer to start or resume the game.
